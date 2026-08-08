@@ -17,18 +17,62 @@ export function formatCurrency(value: number | string, currency = "IDR") {
 
 export function formatDateTime(value: string | null | undefined) {
   if (!value) {
-    return "Not scheduled";
+    return "Belum diatur";
   }
 
-  return format(new Date(value), "dd MMM yyyy, HH:mm");
+  try {
+    const d = new Date(value);
+    if (isNaN(d.getTime())) return value;
+
+    const formatter = new Intl.DateTimeFormat("id-ID", {
+      timeZone: "Asia/Jakarta",
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false
+    });
+
+    const parts = formatter.formatToParts(d);
+    let day = "";
+    let month = "";
+    let year = "";
+    let hour = "";
+    let minute = "";
+
+    for (const p of parts) {
+      if (p.type === "day") day = p.value;
+      if (p.type === "month") month = p.value;
+      if (p.type === "year") year = p.value;
+      if (p.type === "hour") hour = p.value;
+      if (p.type === "minute") minute = p.value;
+    }
+
+    return `${day} ${month} ${year}, ${hour}:${minute}`;
+  } catch {
+    return format(new Date(value), "dd MMM yyyy, HH:mm");
+  }
 }
 
 export function formatDate(value: string | null | undefined) {
   if (!value) {
-    return "Not set";
+    return "Belum diatur";
   }
 
-  return format(new Date(value), "dd MMM yyyy");
+  try {
+    const d = new Date(value);
+    if (isNaN(d.getTime())) return value;
+
+    return new Intl.DateTimeFormat("id-ID", {
+      timeZone: "Asia/Jakarta",
+      day: "numeric",
+      month: "short",
+      year: "numeric"
+    }).format(d);
+  } catch {
+    return format(new Date(value), "dd MMM yyyy");
+  }
 }
 
 export function toDateTimeLocal(value: string | null | undefined) {
