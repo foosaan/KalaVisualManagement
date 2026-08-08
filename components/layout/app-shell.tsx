@@ -278,6 +278,64 @@ export function AppShell({ children, profile, locale }: AppShellProps) {
         </div>
       )}
 
+      {/* ── Mobile Bottom Navigation Bar (Thumb Friendly) ── */}
+      <div className="fixed bottom-0 left-0 right-0 z-30 flex h-16 items-center justify-around border-t border-border bg-card/95 backdrop-blur-md px-1 lg:hidden shadow-lg">
+        <Link
+          href="/dashboard"
+          className={cn(
+            "flex flex-col items-center gap-1 py-1 px-3 text-[10px] font-medium transition-colors rounded-xl",
+            pathname === "/dashboard" ? "text-emerald-600 font-bold bg-emerald-500/10" : "text-muted-foreground hover:text-foreground"
+          )}
+        >
+          <LayoutDashboard className="h-4 w-4" />
+          <span>Dashboard</span>
+        </Link>
+
+        <Link
+          href="/chat"
+          className={cn(
+            "flex flex-col items-center gap-1 py-1 px-3 text-[10px] font-medium transition-colors rounded-xl",
+            pathname === "/chat" ? "text-emerald-600 font-bold bg-emerald-500/10" : "text-muted-foreground hover:text-foreground"
+          )}
+        >
+          <MessageSquare className="h-4 w-4" />
+          <span>KalaAI</span>
+        </Link>
+
+        <Link
+          href="/jobs"
+          className={cn(
+            "flex flex-col items-center gap-1 py-1 px-3 text-[10px] font-medium transition-colors rounded-xl",
+            pathname.startsWith("/jobs") ? "text-emerald-600 font-bold bg-emerald-500/10" : "text-muted-foreground hover:text-foreground"
+          )}
+        >
+          <CalendarClock className="h-4 w-4" />
+          <span>Pekerjaan</span>
+        </Link>
+
+        <Link
+          href="/calendar"
+          className={cn(
+            "flex flex-col items-center gap-1 py-1 px-3 text-[10px] font-medium transition-colors rounded-xl",
+            pathname === "/calendar" ? "text-emerald-600 font-bold bg-emerald-500/10" : "text-muted-foreground hover:text-foreground"
+          )}
+        >
+          <CalendarDays className="h-4 w-4" />
+          <span>Kalender</span>
+        </Link>
+
+        <Link
+          href="/finance"
+          className={cn(
+            "flex flex-col items-center gap-1 py-1 px-3 text-[10px] font-medium transition-colors rounded-xl",
+            pathname === "/finance" ? "text-emerald-600 font-bold bg-emerald-500/10" : "text-muted-foreground hover:text-foreground"
+          )}
+        >
+          <TrendingUp className="h-4 w-4" />
+          <span>Keuangan</span>
+        </Link>
+      </div>
+
       {/* Main content */}
       <main className="app-main animate-fade-in">
         {children}

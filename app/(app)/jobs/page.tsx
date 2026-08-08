@@ -5,7 +5,8 @@ import {
   MapPin,
   Plus,
   Search,
-  Sparkles
+  Sparkles,
+  MessageCircle
 } from "lucide-react";
 
 import { deleteJobAction } from "@/lib/actions/jobs";
@@ -181,25 +182,30 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
 
                     {/* Main info */}
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <Link
-                          href={`/jobs/${job.job_id}`}
-                          className="text-sm font-semibold hover:text-primary transition-colors truncate"
-                        >
-                          {job.title}
-                        </Link>
-                        <JobStatusBadge status={job.status!} />
-                        <PaymentStatusBadge status={job.payment_status} />
+                      <div className="flex items-start justify-between gap-2 flex-wrap sm:flex-nowrap">
+                        <div className="flex items-center gap-2 flex-wrap min-w-0">
+                          <Link
+                            href={`/jobs/${job.job_id}`}
+                            className="text-sm font-bold hover:text-emerald-600 transition-colors truncate"
+                          >
+                            {job.title}
+                          </Link>
+                          <JobStatusBadge status={job.status!} />
+                          <PaymentStatusBadge status={job.payment_status} />
+                        </div>
+                        <p className="text-sm font-bold tabular-nums text-emerald-700 shrink-0">
+                          {formatCurrency(job.gross_income ?? 0, job.currency || "IDR")}
+                        </p>
                       </div>
 
-                      <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-muted-foreground">
-                        <span className="inline-flex items-center gap-1">
-                          <CalendarClock className="h-3 w-3" />
+                      <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
+                        <span className="inline-flex items-center gap-1 font-medium">
+                          <CalendarClock className="h-3.5 w-3.5 text-cyan-600" />
                           {formatDateTime(job.start_at)}
                         </span>
                         {job.location && (
                           <span className="inline-flex items-center gap-1">
-                            <MapPin className="h-3 w-3" />
+                            <MapPin className="h-3.5 w-3.5 text-amber-600" />
                             {job.location}
                           </span>
                         )}
@@ -208,63 +214,49 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
                         )}
                       </div>
 
-                      {/* Mobile: Workflow + Price */}
-                      <div className="mt-2 flex items-center justify-between gap-2 sm:hidden">
+                      {/* Bottom Action Row (Mobile & Desktop) */}
+                      <div className="mt-2.5 flex items-center justify-between gap-2 pt-2 border-t border-border/40 flex-wrap">
                         <InlineWorkflowSelector
                           jobId={job.job_id!}
                           current={job.workflow_status || "scheduled"}
                         />
-                        <p className="text-sm font-bold tabular-nums text-emerald-700">
-                          {formatCurrency(job.gross_income ?? 0, job.currency || "IDR")}
-                        </p>
-                      </div>
-                    </div>
 
-                    {/* Desktop right side */}
-                    <div className="hidden sm:flex items-center gap-4 shrink-0">
-                      <InlineWorkflowSelector
-                        jobId={job.job_id!}
-                        current={job.workflow_status || "scheduled"}
-                      />
-                      <p className="text-sm font-bold tabular-nums text-emerald-700 w-28 text-right">
-                        {formatCurrency(job.gross_income ?? 0, job.currency || "IDR")}
-                      </p>
-
-                      {/* Actions */}
-                      <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                        {job.client_phone && (
-                          <a
-                            className="rounded-lg p-1.5 text-muted-foreground/40 hover:bg-emerald-50 hover:text-emerald-600 transition-colors"
-                            href={buildWhatsAppUrl(
-                              job.client_phone,
-                              getClientReminderTemplate(
-                                { title: job.title || "", startAt: job.start_at || "", endAt: job.end_at || "", location: job.location },
-                                { name: job.client_name || "", phone: job.client_phone }
-                              )
-                            )}
-                            rel="noopener noreferrer"
-                            target="_blank"
-                            title="WhatsApp"
+                        <div className="flex items-center gap-1">
+                          {job.client_phone && (
+                            <a
+                              className="rounded-lg p-1.5 text-emerald-600 hover:bg-emerald-50 transition-colors text-xs font-semibold flex items-center gap-1"
+                              href={buildWhatsAppUrl(
+                                job.client_phone,
+                                getClientReminderTemplate(
+                                  { title: job.title || "", startAt: job.start_at || "", endAt: job.end_at || "", location: job.location },
+                                  { name: job.client_name || "", phone: job.client_phone }
+                                )
+                              )}
+                              rel="noopener noreferrer"
+                              target="_blank"
+                              title="WhatsApp"
+                            >
+                              <MessageCircle className="h-3.5 w-3.5" />
+                              <span className="hidden sm:inline">WA</span>
+                            </a>
+                          )}
+                          <Link
+                            className="rounded-lg p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+                            href={`/jobs/${job.job_id}`}
+                            title={t("jobs.view", locale)}
                           >
-                            💬
-                          </a>
-                        )}
-                        <Link
-                          className="rounded-lg p-1.5 text-muted-foreground/40 hover:bg-muted hover:text-foreground transition-colors"
-                          href={`/jobs/${job.job_id}`}
-                          title={t("jobs.view", locale)}
-                        >
-                          <ArrowRight className="h-4 w-4" />
-                        </Link>
-                        <Link
-                          className="rounded-lg p-1.5 text-muted-foreground/40 hover:bg-muted hover:text-foreground transition-colors"
-                          href={`/jobs/${job.job_id}/edit`}
-                          title={t("jobs.edit", locale)}
-                        >
-                          ✏️
-                        </Link>
-                        <DuplicateJobButton jobId={job.job_id!} label="" size="sm" variant="ghost" />
-                        <DeleteButton action={deleteJobAction.bind(null, job.job_id!)} entityName={t("delete.job", locale)} />
+                            <ArrowRight className="h-4 w-4" />
+                          </Link>
+                          <Link
+                            className="rounded-lg p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors text-xs"
+                            href={`/jobs/${job.job_id}/edit`}
+                            title={t("jobs.edit", locale)}
+                          >
+                            ✏️
+                          </Link>
+                          <DuplicateJobButton jobId={job.job_id!} label="" size="sm" variant="ghost" />
+                          <DeleteButton action={deleteJobAction.bind(null, job.job_id!)} entityName={t("delete.job", locale)} />
+                        </div>
                       </div>
                     </div>
                   </div>
