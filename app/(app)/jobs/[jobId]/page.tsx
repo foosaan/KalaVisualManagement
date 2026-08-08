@@ -583,7 +583,7 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
                   {/* Notes */}
                   {assignment.notes && (
                     <div className="px-4 pb-3">
-                      <p className="text-xs text-muted-foreground italic">"{assignment.notes}"</p>
+                      <p className="text-xs text-muted-foreground italic">&quot;{assignment.notes}&quot;</p>
                     </div>
                   )}
 

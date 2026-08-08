@@ -59,7 +59,7 @@ function parseBookingWithCatalog(rawText: string): ParsedBookingData {
   const matchedPackage = matchPackageFromCatalog(rawPkgName || text);
 
   const shootType: ParsedBookingData["shootType"] = matchedPackage?.shootType || "graduation";
-  let totalPrice = matchedPackage?.price || 400000;
+  const totalPrice = matchedPackage?.price || 400000;
 
   // Dates & Times
   const now = new Date();

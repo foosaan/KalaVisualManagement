@@ -625,7 +625,7 @@ export function JobForm({ mode, jobId, contacts: initialContacts, initialValues 
           {fields.length === 0 && contacts.length > 0 && (
             <div className="text-center py-6 rounded-xl border border-dashed border-border">
               <p className="text-sm text-muted-foreground">
-                Belum ada yang ditugaskan. Klik "Tambah orang" untuk mulai.
+                Belum ada yang ditugaskan. Klik &quot;Tambah orang&quot; untuk mulai.
               </p>
             </div>
           )}

@@ -113,7 +113,7 @@ export default async function RemindersPage({ searchParams }: RemindersPageProps
                     </p>
                     {reminder.message && (
                       <p className="text-xs text-muted-foreground/70 mt-1 line-clamp-1 italic">
-                        "{reminder.message}"
+                        &quot;{reminder.message}&quot;
                       </p>
                     )}
                   </div>

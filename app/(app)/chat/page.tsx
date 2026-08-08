@@ -1,4 +1,4 @@
-import { MessageSquare, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { AiChatInterface } from "@/components/chat/ai-chat-interface";
 
 export default function AiChatPage() {
