@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { MessageCircle, CheckCircle2, AlertCircle } from "lucide-react";
+import { MessageCircle, CheckCircle2, CreditCard } from "lucide-react";
 
 import { type Locale, t } from "@/lib/i18n";
 import { formatCurrency } from "@/lib/utils";
@@ -75,28 +75,25 @@ _Po.Graduation Photography_`;
         return (
           <div
             key={job.job_id || i}
-            className="group glass-card rounded-2xl p-4 shadow-sm border border-border/80 hover:border-amber-500/40 transition-all space-y-3 animate-slide-up"
+            className="group glass-card rounded-2xl p-4 shadow-xs border border-border/80 hover:border-amber-500/40 transition-all space-y-3 animate-slide-up"
           >
-            <div className="flex items-start justify-between gap-3">
-              <div className="min-w-0 flex-1">
+            {/* Title & Sisa Tagihan in Clean 2-Row Stack */}
+            <div className="space-y-1">
+              <div className="flex items-start justify-between gap-2">
                 <Link
                   href={`/jobs/${job.job_id || ""}`}
-                  className="truncate text-sm font-bold text-foreground group-hover:text-amber-600 transition-colors block"
+                  className="font-bold text-xs sm:text-sm text-foreground group-hover:text-amber-600 transition-colors line-clamp-1 flex-1"
                 >
                   {job.title}
                 </Link>
-                <p className="text-xs text-muted-foreground font-medium mt-0.5">
-                  👤 {clientName}
-                </p>
+                <span className="text-xs sm:text-sm font-extrabold tabular-nums text-amber-700 dark:text-amber-400 shrink-0">
+                  {formatCurrency(outstanding, job.currency || "IDR")}
+                </span>
               </div>
 
-              <div className="text-right shrink-0">
-                <p className="text-sm font-bold tabular-nums text-amber-700 dark:text-amber-400">
-                  {formatCurrency(outstanding, job.currency || "IDR")}
-                </p>
-                <p className="text-[10px] text-muted-foreground">
-                  DP Masuk: {formatCurrency(paid, job.currency || "IDR")}
-                </p>
+              <div className="flex items-center justify-between text-[11px] text-muted-foreground">
+                <span className="truncate">👤 {clientName}</span>
+                <span className="shrink-0">DP: {formatCurrency(paid, job.currency || "IDR")}</span>
               </div>
             </div>
 
@@ -120,7 +117,7 @@ _Po.Graduation Photography_`;
                 href={waUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-800 dark:text-amber-300 border border-amber-500/20 px-3 py-1.5 text-xs font-semibold transition"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-800 dark:text-amber-300 border border-amber-500/20 px-3 py-1.5 text-xs font-bold transition shadow-xs"
               >
                 <MessageCircle className="h-3.5 w-3.5" />
                 Tagih Pelunasan WA
@@ -128,7 +125,7 @@ _Po.Graduation Photography_`;
 
               <Link
                 href={`/jobs/${job.job_id || ""}`}
-                className="text-xs font-medium text-muted-foreground hover:text-foreground"
+                className="text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors"
               >
                 Lihat Detail →
               </Link>

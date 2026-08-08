@@ -187,7 +187,7 @@ _Po.Graduation Photography_`;
       <MonthlyChart data={monthlyTrend} locale={locale} />
 
       {/* ── Main Content Grid: Timeline + Unpaid ── */}
-      <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
+      <div className="grid gap-6 lg:grid-cols-2">
         {/* Upcoming Shoots Timeline */}
         <div className="animate-slide-up stagger-4">
           <div className="flex items-center justify-between mb-4">

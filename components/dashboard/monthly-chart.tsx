@@ -125,9 +125,9 @@ export function MonthlyChart({ data, locale }: MonthlyChartProps) {
         </div>
       </div>
 
-      <div className="h-72 w-full pt-2">
+      <div className="h-72 w-full pt-4">
         <ResponsiveContainer height="100%" width="100%">
-          <AreaChart data={data} margin={{ top: 10, right: 10, bottom: 0, left: 0 }}>
+          <AreaChart data={data} margin={{ top: 25, right: 15, bottom: 5, left: 5 }}>
             <defs>
               <linearGradient id="grossGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#10b981" stopOpacity={0.35} />
